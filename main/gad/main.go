@@ -15,3 +15,12 @@ var (
 func main() {
 
 }
+
+// 如果没有运行特殊的子命令，gaidoc是进入系统的主要入口点。
+// 它根据命令行参数创建一个默认节点，并以阻塞模式运行它，等待它关闭。
+func gad(ctx *cli.Context) error {
+	node := makeFullNode(ctx)
+	startNode(ctx, node)
+	node.Wait()
+	return nil
+}
