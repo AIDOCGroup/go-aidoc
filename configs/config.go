@@ -1,3 +1,5 @@
+
+
 package configs
 
 import (
@@ -27,7 +29,7 @@ var (
 
 		//ByzantiumBlock:      big.NewInt(0),
 		//ConstantinopleBlock: nil,
-		Aidochash: new(AidochashConfig),
+		Aidochash:              new(AidochashConfig),
 	}
 
 	// TestnetChainConfig包含在Ropsten测试网络上运行节点的链参数。
@@ -43,11 +45,11 @@ var (
 
 		//ByzantiumBlock:      big.NewInt(1700000),
 		//ConstantinopleBlock: nil,
-		Aidochash: new(AidochashConfig),
+		Aidochash:              new(AidochashConfig),
 	}
 
 	// RinkebyChainConfig包含在Rinkeby测试网络上运行节点的链参数。
-	RinkebyChainConfig = &ChainConfig{
+	RinkebyChainConfig = &ChainConfig {
 		ChainID:        big.NewInt(4),
 		HomesteadBlock: big.NewInt(1),
 		//DAOForkBlock:   nil,
@@ -68,7 +70,7 @@ var (
 	//
 	//此配置有意不使用键控字段强制任何向配置添加标志的人也必须设置这些字段。
 
-	AllAidochashProtocolChanges = &ChainConfig{
+	AllAidochashProtocolChanges = &ChainConfig {
 		big.NewInt(1337),
 		big.NewInt(0),
 		//nil,
@@ -84,11 +86,11 @@ var (
 		//nil,
 	}
 
-	// AllCliqueProtocolChanges包含由Aidoc核心开发人员引入和接受的每个协议更改（EIP）到Clique共识中。
+		// AllCliqueProtocolChanges包含由Aidoc核心开发人员引入和接受的每个协议更改（EIP）到Clique共识中。
 	//
 	//此配置有意不使用键控字段强制任何向配置添加标志的人也必须设置这些字段。
 
-	AllCliqueProtocolChanges = &ChainConfig{
+	AllCliqueProtocolChanges = &ChainConfig {
 		big.NewInt(1337),
 		big.NewInt(0),
 		//nil,
@@ -119,7 +121,7 @@ var (
 		new(AidochashConfig),
 		//nil
 	}
-	TestRules = TestChainConfig.Rules(new(big.Int))
+	TestRules       = TestChainConfig.Rules(new(big.Int))
 )
 
 // ChainConfig是确定区块链设置的核心配置。
@@ -230,8 +232,8 @@ func (c *ChainConfig) IsHomestead(num *big.Int) bool {
 //	return isForked(c.ByzantiumBlock, num)
 //}
 
-func (c *ChainConfig) IsAiDoc(num *big.Int) bool {
-	return isForked(c.AiDocBlock, num)
+func( c *ChainConfig) IsAiDoc( num *big.Int) bool{
+	return isForked(c.AiDocBlock , num)
 }
 
 //// IsConstantinople 返回 num 是否等于 Constantinople fork 块或更大。
@@ -256,7 +258,6 @@ func (c *ChainConfig) GasTable(num *big.Int) GasTable {
 	//}
 	return GasTableHomestead
 }
-
 // CheckCompatible 检查是否使用不匹配的链配置导入了调度的fork转换。
 func (c *ChainConfig) CheckCompatible(newcfg *ChainConfig, height uint64) *ConfigCompatError {
 	bhead := new(big.Int).SetUint64(height)
@@ -304,7 +305,6 @@ func (c *ChainConfig) checkCompatible(newcfg *ChainConfig, head *big.Int) *Confi
 	//}
 	return nil
 }
-
 //如果在s1调度的fork无法重新调度为阻塞s2，则 isForkIncompatible 返回 true，因为 head 已经超过了 fork。
 func isForkIncompatible(s1, s2, head *big.Int) bool {
 	return (isForked(s1, head) || isForked(s2, head)) && !configNumEqual(s1, s2)
@@ -362,8 +362,8 @@ func (err *ConfigCompatError) Error() string {
 //
 // 规则是一次性界面，意味着不应在过渡阶段之间使用它。
 type Rules struct {
-	ChainID     *big.Int
-	IsHomestead bool
+	ChainID       *big.Int
+	IsHomestead   bool
 	//IsEIP150      bool
 	//IsEIP155      bool
 	//IsEIP158      bool
@@ -376,8 +376,8 @@ func (c *ChainConfig) Rules(num *big.Int) Rules {
 	if chainID == nil {
 		chainID = new(big.Int)
 	}
-	return Rules{
-		ChainID:     new(big.Int).Set(chainID),
+	return Rules {
+		ChainID: new(big.Int).Set(chainID),
 		IsHomestead: c.IsHomestead(num),
 		//IsEIP150: c.IsEIP150(num),
 		//IsEIP155: c.IsEIP155(num),

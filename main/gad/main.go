@@ -11,21 +11,20 @@ import (
 	"strings"
 	"time"
 
-	"fmt"
-
-	"github.com/AIDOCGroup/go-aidoc/lib/i18"
-	"github.com/AIDOCGroup/go-aidoc/lib/logger"
-	"github.com/AIDOCGroup/go-aidoc/main/utils"
-	"github.com/AIDOCGroup/go-aidoc/service"
-	"github.com/AIDOCGroup/go-aidoc/service/accounts"
-	"github.com/AIDOCGroup/go-aidoc/service/accounts/keystore"
-	"github.com/AIDOCGroup/go-aidoc/service/adclient"
-	"github.com/AIDOCGroup/go-aidoc/service/console"
-	"github.com/AIDOCGroup/go-aidoc/service/debug"
-	"github.com/AIDOCGroup/go-aidoc/service/metrics"
-	"github.com/AIDOCGroup/go-aidoc/service/node"
+	"github.com/aidoc/go-aidoc/service/debug"
+	"github.com/aidoc/go-aidoc/main/utils"
+	"github.com/aidoc/go-aidoc/service"
+	"github.com/aidoc/go-aidoc/service/accounts"
+	"github.com/aidoc/go-aidoc/service/accounts/keystore"
+	"github.com/aidoc/go-aidoc/service/console"
+	"github.com/aidoc/go-aidoc/service/adclient"
+	"github.com/aidoc/go-aidoc/service/metrics"
+	"github.com/aidoc/go-aidoc/service/node"
 	"github.com/elastic/gosigar"
 	"gopkg.in/urfave/cli.v1"
+	"github.com/aidoc/go-aidoc/lib/logger"
+	"github.com/aidoc/go-aidoc/lib/i18"
+	"fmt"
 )
 
 const (
@@ -141,7 +140,7 @@ func startNode(ctx *cli.Context, stack *node.Node) {
 		// 打开已经附加的钱包
 		for _, wallet := range stack.AccountManager().Wallets() {
 			if err := wallet.Open(""); err != nil {
-				logger.Warn("无法打开钱包", "url", wallet.URL(), err.Error())
+				logger.Warn("无法打开钱包", "url", wallet.URL(),  err.Error())
 			}
 		}
 		// 监听钱包事件，直至终止
@@ -149,7 +148,7 @@ func startNode(ctx *cli.Context, stack *node.Node) {
 			switch event.Kind {
 			case accounts.WalletArrived:
 				if err := event.Wallet.Open(""); err != nil {
-					logger.Warn(" 新钱包出现了，未能打开 ", "url", event.Wallet.URL(), err.Error())
+					logger.Warn(" 新钱包出现了，未能打开 ", "url", event.Wallet.URL(),  err.Error())
 				}
 			case accounts.WalletOpened:
 				status, _ := event.Wallet.Status()

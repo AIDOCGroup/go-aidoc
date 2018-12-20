@@ -6,9 +6,9 @@ import (
 	"os"
 	"strings"
 
+	"github.com/aidoc/go-aidoc/lib/math"
 	"github.com/aidoc/go-aidoc/lib/chain_core/vm"
 	"github.com/aidoc/go-aidoc/lib/i18"
-	"github.com/aidoc/go-aidoc/lib/math"
 )
 
 //编译器包含有关已解析源的信息并保存程序的标记。
@@ -86,7 +86,6 @@ func (c *Compiler) Compile() (string, []error) {
 	}
 	return bin, errors
 }
-
 // next返回下一个标记并递增位置。
 func (c *Compiler) next() token {
 	token := c.tokens[c.pos]
@@ -189,7 +188,6 @@ func (c *Compiler) compileElement(element token) error {
 
 	return nil
 }
-
 // compileLabel将跳转到二进制切片。
 func (c *Compiler) compileLabel() {
 	c.pushBin(vm.JUMPDEST)
@@ -202,12 +200,10 @@ func (c *Compiler) pushBin(v interface{}) {
 	}
 	c.binary = append(c.binary, v)
 }
-
 // isPush返回字符串op是否为push（N）中的任何一个。
 func isPush(op string) bool {
 	return strings.ToUpper(op) == "PUSH"
 }
-
 // isJump返回字符串op是否为jump（i）
 func isJump(op string) bool {
 	return strings.ToUpper(op) == "JUMPI" || strings.ToUpper(op) == "JUMP"

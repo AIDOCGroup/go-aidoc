@@ -1,3 +1,5 @@
+
+
 // 为处理EVM组装指令（例如，拆卸它们）提供支持。
 package asm
 
@@ -25,7 +27,6 @@ func NewInstructionIterator(code []byte) *instructionIterator {
 	it.code = code
 	return it
 }
-
 //如果有下一条指令并继续，则返回true。
 func (it *instructionIterator) Next() bool {
 	if it.error != nil || uint64(len(it.code)) <= it.pc {
@@ -68,22 +69,18 @@ func (it *instructionIterator) Next() bool {
 func (it *instructionIterator) Error() error {
 	return it.error
 }
-
 //返回当前指令的PC。
 func (it *instructionIterator) PC() uint64 {
 	return it.pc
 }
-
 //返回当前指令的操作码。
 func (it *instructionIterator) Op() vm.OpCode {
 	return it.op
 }
-
 //返回当前指令的参数。
 func (it *instructionIterator) Arg() []byte {
 	return it.arg
 }
-
 //将所有反汇编的EVM指令打印到stdout。
 func PrintDisassembled(code string) error {
 	script, err := hex.DecodeString(code)
@@ -101,7 +98,6 @@ func PrintDisassembled(code string) error {
 	}
 	return it.Error()
 }
-
 //以人类可读的格式返回所有反汇编的EVM指令。
 func Disassemble(script []byte) ([]string, error) {
 	instrs := make([]string, 0)

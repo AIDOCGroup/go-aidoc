@@ -3,14 +3,13 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
-
+	"github.com/aidoc/go-aidoc/service/accounts/abi/bind"
 	"github.com/aidoc/go-aidoc/lib/compiler"
 	"github.com/aidoc/go-aidoc/lib/logger"
-	"github.com/aidoc/go-aidoc/service/accounts/abi/bind"
+	"fmt"
 )
 
 var (

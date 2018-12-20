@@ -1,18 +1,19 @@
+
 //  bootnode（启动节点）运行 AIDOC发现协议的引导节点。
 package main
 
 import (
 	"crypto/ecdsa"
 	"flag"
-	"fmt"
 	"net"
 	"os"
+	"fmt"
 
 	"github.com/aidoc/go-aidoc/lib/crypto"
-	"github.com/aidoc/go-aidoc/lib/logger"
 	"github.com/aidoc/go-aidoc/service/p2p/discover"
 	"github.com/aidoc/go-aidoc/service/p2p/nat"
 	"github.com/aidoc/go-aidoc/service/p2p/netutil"
+	"github.com/aidoc/go-aidoc/lib/logger"
 )
 
 func main() {
@@ -31,6 +32,7 @@ func main() {
 		err     error
 	)
 	flag.Parse()
+
 
 	natm, err := nat.Parse(*natdesc)
 	if err != nil {

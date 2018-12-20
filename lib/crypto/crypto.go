@@ -1,3 +1,5 @@
+
+
 package crypto
 
 import (
@@ -11,13 +13,12 @@ import (
 	"math/big"
 	"os"
 
-	"fmt"
-
 	"github.com/aidoc/go-aidoc/lib/chain_common"
-	"github.com/aidoc/go-aidoc/lib/crypto/sha3"
-	"github.com/aidoc/go-aidoc/lib/i18"
 	"github.com/aidoc/go-aidoc/lib/math"
+	"github.com/aidoc/go-aidoc/lib/crypto/sha3"
 	"github.com/aidoc/go-aidoc/lib/rlp"
+	"fmt"
+	"github.com/aidoc/go-aidoc/lib/i18"
 )
 
 var (
@@ -34,7 +35,6 @@ func Keccak256(data ...[]byte) []byte {
 	}
 	return d.Sum(nil)
 }
-
 // Keccak256Hash计算并返回输入数据的Keccak256哈希，将其转换为内部哈希数据结构。
 func Keccak256Hash(data ...[]byte) (h chain_common.Hash) {
 	d := sha3.NewKeccak256()
@@ -59,12 +59,10 @@ func CreateAddress(b chain_common.Address, nonce uint64) chain_common.Address {
 	data, _ := rlp.EncodeToBytes([]interface{}{b, nonce})
 	return chain_common.BytesToAddress(Keccak256(data)[12:])
 }
-
 // ToECDSA 使用给定的D值创建私钥。
 func ToECDSA(d []byte) (*ecdsa.PrivateKey, error) {
 	return toECDSA(d, true)
 }
-
 // ToECDSAUnsafe盲目地将二进制blob转换为私钥。
 // 除非您确定输入有效并且希望避免因错误的原点编码（0前缀被截断）而导致出现错误，否则几乎不应该使用它。
 func ToECDSAUnsafe(d []byte) *ecdsa.PrivateKey {
@@ -78,17 +76,17 @@ func toECDSA(d []byte, strict bool) (*ecdsa.PrivateKey, error) {
 	priv := new(ecdsa.PrivateKey)
 	priv.PublicKey.Curve = S256()
 	if strict && 8*len(d) != priv.Params().BitSize {
-		return nil, fmt.Errorf(i18.I18_print.Sprintf("无效长度，需要 %d 位", priv.Params().BitSize))
+		return nil, fmt.Errorf(i18.I18_print.Sprintf("无效长度，需要 %d 位", priv.Params().BitSize) )
 	}
 	priv.D = new(big.Int).SetBytes(d)
 
 	// The priv.D must < N
 	if priv.D.Cmp(secp256k1N) >= 0 {
-		return nil, fmt.Errorf(i18.I18_print.Sprintf("私钥无效：, >=N"))
+		return nil, fmt.Errorf(i18.I18_print.Sprintf("私钥无效：, >=N") )
 	}
 	//  priv.D不得为零或否定。
 	if priv.D.Sign() <= 0 {
-		return nil, fmt.Errorf(i18.I18_print.Sprintf("私钥无效：, 零或负"))
+		return nil, fmt.Errorf(i18.I18_print.Sprintf("私钥无效：, 零或负") )
 	}
 
 	priv.PublicKey.X, priv.PublicKey.Y = priv.PublicKey.Curve.ScalarBaseMult(d)
@@ -121,7 +119,6 @@ func FromECDSAPub(pub *ecdsa.PublicKey) []byte {
 	}
 	return elliptic.Marshal(S256(), pub.X, pub.Y)
 }
-
 // HexToECDSA 解析 secp256k1 私钥。
 func HexToECDSA(hexkey string) (*ecdsa.PrivateKey, error) {
 	b, err := hex.DecodeString(hexkey)
@@ -149,7 +146,6 @@ func LoadECDSA(file string) (*ecdsa.PrivateKey, error) {
 	}
 	return ToECDSA(key)
 }
-
 // SaveECDSA使用限制权限将secp256k1私钥保存到给定文件。
 // 密钥数据保存为十六进制编码。
 func SaveECDSA(file string, key *ecdsa.PrivateKey) error {

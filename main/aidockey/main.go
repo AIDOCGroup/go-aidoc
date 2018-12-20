@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"os"
+	"fmt"
 
 	"github.com/aidoc/go-aidoc/main/utils"
 	"gopkg.in/urfave/cli.v1"
